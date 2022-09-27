@@ -1,5 +1,5 @@
 const { sequelize } = require('./models');
-// sequelize.sync({ alter: true });
+sequelize.sync({ force: true });
 
 require('dotenv').config(); // เรียกใช้ทุกอย่างใน .env
 const express = require('express');
