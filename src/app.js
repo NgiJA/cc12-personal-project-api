@@ -8,7 +8,8 @@ const morgan = require('morgan');
 const notFound = require('./middlewares/notFound');
 const error = require('./middlewares/error');
 
-const authRoute = require('./routes/authRoute');
+const authRouteUser = require('./routes/authRouteUser');
+const authRouteAdmin = require('./routes/authRouteAdmin');
 
 const app = express();
 
@@ -20,7 +21,8 @@ app.use(cors()); // ให้ server สามารถรับ request ที�
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/user/auth', authRoute);
+app.use('/user/auth', authRouteUser);
+app.use('/admin/auth', authRouteAdmin);
 
 app.use(notFound);
 app.use(error);
