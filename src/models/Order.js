@@ -38,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				allowNull: false
 			},
+			slip: {
+				type: DataTypes.STRING,
+				allowNull: false
+			},
 			status: {
 				type: DataTypes.ENUM('PENDING', 'SUCCESS', 'CANCEL'),
 				allowNull: false,

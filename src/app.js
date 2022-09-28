@@ -1,10 +1,14 @@
 const { sequelize } = require('./models');
-sequelize.sync({ force: true });
+// sequelize.sync({ alter: true });
 
 require('dotenv').config(); // เรียกใช้ทุกอย่างใน .env
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const notFound = require('./middlewares/notFound');
+const error = require('./middlewares/error');
+
+const authRoute = require('./routes/authRoute');
 
 const app = express();
 
@@ -15,6 +19,11 @@ if (process.env.NODE_ENV === 'development') {
 app.use(cors()); // ให้ server สามารถรับ request ที่มาจากต่าง domain ได้
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use('/user/auth', authRoute);
+
+app.use(notFound);
+app.use(error);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`server running on port: ${port}`));
