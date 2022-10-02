@@ -10,6 +10,8 @@ const error = require('./middlewares/error');
 
 const authRouteUser = require('./routes/authRouteUser');
 const authRouteAdmin = require('./routes/authRouteAdmin');
+const productRouteAdmin = require('./routes/productRouteAdmin');
+const featureRouteUser = require('./routes/featureRouteUser');
 
 const app = express();
 
@@ -22,7 +24,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/user/auth', authRouteUser);
+app.use('/user/feature', featureRouteUser);
 app.use('/admin/auth', authRouteAdmin);
+app.use('/admin/product', productRouteAdmin);
 
 app.use(notFound);
 app.use(error);

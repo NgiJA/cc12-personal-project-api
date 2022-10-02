@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
 	const Product = sequelize.define(
 		'Product',
 		{
-			ProductName: {
+			productName: {
 				type: DataTypes.STRING,
 				unique: true,
 				allowNull: false,
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 					notEmpty: true
 				}
 			},
-			ProductType: {
+			productType: {
 				type: DataTypes.ENUM('TOP', 'BOTTOM', 'FOOTWARE'),
 				allowNull: false,
 				validate: {
