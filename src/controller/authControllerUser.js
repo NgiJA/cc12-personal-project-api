@@ -41,6 +41,14 @@ exports.register = async (req, res, next) => {
 			throw new AppError('lastname is required', 400);
 		}
 
+		if (!email) {
+			throw new AppError('email is required', 400);
+		}
+
+		if (!mobile) {
+			throw new AppError('mobile is required', 400);
+		}
+
 		if (!isEmail) {
 			throw new AppError('email invalid format', 400);
 		}

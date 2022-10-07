@@ -25,18 +25,18 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			email: {
 				type: DataTypes.STRING,
-				unique: true,
+				allowNull: false,
+
 				validate: {
 					isEmail: true
 				}
 			},
 			mobile: {
 				type: DataTypes.STRING,
-				unique: true
+				allowNull: false
 			},
 			optional: {
-				type: DataTypes.STRING,
-				allowNull: false
+				type: DataTypes.STRING
 			},
 			slip: {
 				type: DataTypes.STRING,

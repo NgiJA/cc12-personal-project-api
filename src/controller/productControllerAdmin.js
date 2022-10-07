@@ -6,7 +6,6 @@ const AppError = require('../utils/appError');
 exports.createProduct = async (req, res, next) => {
 	const { productName, productType, price, stock } = req.body;
 
-	// console.log(productName, productType, price, stock);
 	// console.log(req.file);
 	try {
 		if (!productName) {
@@ -69,32 +68,46 @@ exports.updateProduct = async (req, res, next) => {
 		if (!stock) {
 			throw new AppError('stock is required', 400);
 		}
-		if (!req.file) {
-			throw new AppError('image is required', 400);
-		}
+		// if (!req.file) {
+		// 	throw new AppError('image is required', 400);
+		// }
 
 		const oldProduct = await Product.findOne({ where: { id: productId } });
 		const urlOldImage = oldProduct.image; // หา link ของรูปเก่า เพื่อที่จะนำไปหาค่า publicId เพื่อให้รูปใหม่ที่อัพเดท อัพทับรูปเก่า
 
 		// console.log(urlOldImage);
 		// urlOldImage ของ p2 --> https://res.cloudinary.com/dhri6u7jf/image/upload/v1664642120/16646421176472906243565.jpg
-		const filePath = await cloudinary.upload(
-			req.file.path,
-			cloudinary.getPublicId(urlOldImage)
-		);
-		fs.unlinkSync(req.file.path);
 
-		await Product.update(
-			{
-				productName: productName,
-				productType: productType,
-				price: price,
-				stock: stock,
-				image: filePath
-			},
-			{ where: { id: productId } }
-		);
-		res.status(200).json({ message: 'success update product' });
+		if (req.file) {
+			const filePath = await cloudinary.upload(
+				req.file.path,
+				cloudinary.getPublicId(urlOldImage)
+			);
+			fs.unlinkSync(req.file.path);
+
+			await Product.update(
+				{
+					productName: productName,
+					productType: productType,
+					price: price,
+					stock: stock,
+					image: filePath
+				},
+				{ where: { id: productId } }
+			);
+			res.status(200).json({ message: 'success update product' });
+		} else {
+			await Product.update(
+				{
+					productName: productName,
+					productType: productType,
+					price: price,
+					stock: stock
+				},
+				{ where: { id: productId } }
+			);
+			res.status(200).json({ message: 'success update product' });
+		}
 	} catch (err) {
 		next(err);
 	}
