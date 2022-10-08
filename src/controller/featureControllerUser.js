@@ -64,6 +64,14 @@ exports.createOrder = async (req, res, next) => {
 			// item คือ object ใน cart ที่ส่งมา
 			item.orderId = newOrder.id;
 			await OrderItem.create(item);
+			const product = await Product.findOne({ where: { id: item.productId } });
+			// console.log(product);
+			await Product.update(
+				{
+					stock: product.stock - item.quantity
+				},
+				{ where: { id: product.id } }
+			);
 		}
 
 		res.status(201).json({ message: 'create order success' });
@@ -75,7 +83,7 @@ exports.createOrder = async (req, res, next) => {
 exports.getUserOrder = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
-		console.log(userId);
+		// console.log(userId);
 		const orders = await Order.findAll({
 			where: { customerId: userId },
 			include: [{ model: OrderItem, include: { model: Product } }]
