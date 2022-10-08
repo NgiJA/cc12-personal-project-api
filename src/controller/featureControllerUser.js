@@ -15,7 +15,7 @@ exports.createOrder = async (req, res, next) => {
 		// const mobile = JSON.parse(req.body.mobile);
 		// const optional = JSON.parse(req.body.optional);
 
-		console.log(orderItems);
+		// console.log(orderItems);
 
 		const isEmail = validator.isEmail(String(email));
 		const isMobile = validator.isMobilePhone(String(mobile));
@@ -61,23 +61,26 @@ exports.createOrder = async (req, res, next) => {
 		});
 
 		for (let item of orderItems) {
-			console.log(item);
+			// item คือ object ใน cart ที่ส่งมา
 			item.orderId = newOrder.id;
 			await OrderItem.create(item);
 		}
 
-		// orderItems.for(async (item, index) => {
-		// 	// const product = await Product.findOne({ where: { id: item.productId } }); // หา product object เพื่อหาค่า price
-		// 	// const order = await Order.findOne({ where: { id: newOrder.id } }); // หา order object เพื่อหาค่า orderId
-		// 	// console.log(order);
-
-		// 	// orderItems[index].price = product.price; // เพิ่ม key price ใน object orderItem
-		// 	item.orderId = newOrder.id; // เพิ่ม key orderId ใน object orderItem
-
-		// 	await OrderItem.create(item); // สร้าง orderItem
-		// });
-
 		res.status(201).json({ message: 'create order success' });
+	} catch (err) {
+		next(err);
+	}
+};
+
+exports.getUserOrder = async (req, res, next) => {
+	try {
+		const userId = req.user.id;
+		console.log(userId);
+		const orders = await Order.findAll({
+			where: { customerId: userId },
+			include: [{ model: OrderItem, include: { model: Product } }]
+		});
+		res.status(200).json({ orders: orders });
 	} catch (err) {
 		next(err);
 	}

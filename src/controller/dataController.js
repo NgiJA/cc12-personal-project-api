@@ -34,13 +34,3 @@ exports.getOrderAdmin = async (req, res, next) => {
 		next(err);
 	}
 };
-
-exports.getCartProductData = async (req, res, next) => {
-	try {
-		const { productId } = req.params;
-		const product = await Product.findOne({ where: { id: productId } });
-		res.status(200).json({ product: product });
-	} catch (err) {
-		next(err);
-	}
-};
