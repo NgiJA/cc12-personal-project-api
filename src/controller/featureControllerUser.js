@@ -2,7 +2,7 @@ const fs = require('fs');
 const validator = require('validator');
 const cloudinary = require('../utils/cloudinary');
 const AppError = require('../utils/appError');
-const { Order, OrderItem, Product } = require('../models');
+const { Order, OrderItem, Product, User } = require('../models');
 
 exports.createOrder = async (req, res, next) => {
 	try {
@@ -90,6 +90,17 @@ exports.getUserOrder = async (req, res, next) => {
 			include: [{ model: OrderItem, include: { model: Product } }]
 		});
 		res.status(200).json({ orders: orders });
+	} catch (err) {
+		next(err);
+	}
+};
+
+exports.getUserData = async (req, res, next) => {
+	try {
+		const user = await User.findOne({
+			where: { id: req.user.id }
+		});
+		res.status(200).json({ user: user });
 	} catch (err) {
 		next(err);
 	}

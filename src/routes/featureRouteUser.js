@@ -10,5 +10,6 @@ router
 	.post(upload.single('slip'), featureControllerUser.createOrder);
 
 router.get('/purchaseorder', featureControllerUser.getUserOrder);
+router.get('/user', featureControllerUser.getUserData);
 
 module.exports = router;
