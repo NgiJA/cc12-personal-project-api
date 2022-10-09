@@ -68,7 +68,8 @@ exports.createOrder = async (req, res, next) => {
 			// console.log(product);
 			await Product.update(
 				{
-					stock: product.stock - item.quantity
+					stock: product.stock - item.quantity,
+					sale: product.sale + item.quantity
 				},
 				{ where: { id: product.id } }
 			);

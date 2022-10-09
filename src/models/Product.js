@@ -26,6 +26,13 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			stock: {
 				type: DataTypes.INTEGER,
+				defaultValue: 0,
+				validate: {
+					notEmpty: true
+				}
+			},
+			sale: {
+				type: DataTypes.INTEGER,
 				validate: {
 					notEmpty: true
 				}
