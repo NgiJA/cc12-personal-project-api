@@ -11,6 +11,7 @@ const error = require('./middlewares/error');
 const authRouteUser = require('./routes/authRouteUser');
 const authRouteAdmin = require('./routes/authRouteAdmin');
 const productRouteAdmin = require('./routes/productRouteAdmin');
+const orderRouteAdmin = require('./routes/orderRouteAdmin');
 const featureRouteUser = require('./routes/featureRouteUser');
 const dataRoute = require('./routes/dataRoute');
 const authenticate = require('./middlewares/authenticate');
@@ -30,6 +31,7 @@ app.use('/data', dataRoute);
 app.use('/user/feature', authenticate, featureRouteUser);
 app.use('/admin/auth', authRouteAdmin);
 app.use('/admin/product', productRouteAdmin);
+app.use('/admin/order', orderRouteAdmin);
 
 app.use(notFound);
 app.use(error);

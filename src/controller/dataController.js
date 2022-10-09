@@ -34,3 +34,12 @@ exports.getOrderAdmin = async (req, res, next) => {
 		next(err);
 	}
 };
+
+exports.getAllOrderItem = async (req, res, next) => {
+	try {
+		const orderItems = await OrderItem.findAll();
+		res.status(200).json({ orderItems: orderItems });
+	} catch (err) {
+		next(err);
+	}
+};

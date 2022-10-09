@@ -68,9 +68,6 @@ exports.updateProduct = async (req, res, next) => {
 		if (!stock) {
 			throw new AppError('stock is required', 400);
 		}
-		// if (!req.file) {
-		// 	throw new AppError('image is required', 400);
-		// }
 
 		const oldProduct = await Product.findOne({ where: { id: productId } });
 		const urlOldImage = oldProduct.image; // หา link ของรูปเก่า เพื่อที่จะนำไปหาค่า publicId เพื่อให้รูปใหม่ที่อัพเดท อัพทับรูปเก่า
