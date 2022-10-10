@@ -2,7 +2,7 @@ const { Product, Order, OrderItem, User } = require('../models');
 
 exports.getAllProduct = async (req, res, next) => {
 	try {
-		const products = await Product.findAll();
+		const products = await Product.findAll({ paranoid: false });
 		console.log(products);
 		res.status(200).json({ products: products });
 	} catch (err) {
@@ -25,7 +25,7 @@ exports.getOrderAdmin = async (req, res, next) => {
 	try {
 		const orders = await Order.findAll({
 			include: [
-				{ model: OrderItem, include: { model: Product } },
+				{ model: OrderItem, include: { model: Product, paranoid: false } },
 				{ model: User, attributes: { exclude: 'password' } }
 			]
 		});

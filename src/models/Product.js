@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false
 			}
 		},
-		{ underscored: true }
+		{ underscored: true, paranoid: true }
 	);
 
 	Product.associate = (db) => {

@@ -8,14 +8,6 @@ exports.createOrder = async (req, res, next) => {
 	try {
 		const { firstName, lastName, address, email, mobile, optional } = req.body;
 		const orderItems = JSON.parse(req.body.orderItems);
-		// const firstName = JSON.parse(req.body.firstName);
-		// const lastName = JSON.parse(req.body.lastName);
-		// const address = JSON.parse(req.body.address);
-		// const email = JSON.parse(req.body.email);
-		// const mobile = JSON.parse(req.body.mobile);
-		// const optional = JSON.parse(req.body.optional);
-
-		// console.log(orderItems);
 
 		const isEmail = validator.isEmail(String(email));
 		const isMobile = validator.isMobilePhone(String(mobile));
