@@ -2,7 +2,7 @@ const { Product, Order, OrderItem, User } = require('../models');
 
 exports.getAllProduct = async (req, res, next) => {
 	try {
-		const products = await Product.findAll({ paranoid: false });
+		const products = await Product.findAll();
 		console.log(products);
 		res.status(200).json({ products: products });
 	} catch (err) {
@@ -30,15 +30,6 @@ exports.getOrderAdmin = async (req, res, next) => {
 			]
 		});
 		res.status(200).json({ orders: orders });
-	} catch (err) {
-		next(err);
-	}
-};
-
-exports.getAllOrderItem = async (req, res, next) => {
-	try {
-		const orderItems = await OrderItem.findAll();
-		res.status(200).json({ orderItems: orderItems });
 	} catch (err) {
 		next(err);
 	}
